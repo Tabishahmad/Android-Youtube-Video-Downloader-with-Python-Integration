@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Mp3Downloader</string>
+
+    <string name="youTubeLinkTitle">YouTube Link</string>
+    <string name="dist_folder">Enter Download Folder Destination</string>
+
+    <string name="text_notif_downloading">Downloading</string>
+    <string name="text_notif_download_error">Sorry, error while downloading...</string>
+    <string name="text_notif_download_finished">Download finished !</string>
+    <string name="text_notif_stop">You stopped the downloading</string>
+
+    <string name="title_permission_needed">Permission needed</string>
+    <string name="text_why_permission">This permission is needed to save your videos and musics on your smartphone</string>
+    <string name="text_cancel">Cancel</string>
+
+    <string name="InitialScreenFragment_label">InitialScreenFragment</string>
+    <string name="emptyURL">URL cannot be empty</string>
+    <string name="InvalidURL">Invalid URL</string>
+    <string name="Invalid_dis_et">Invalid destination folder path</string>
+    <string name="emptydis_et">Destination folder should not be empty.</string>
+</resources>
