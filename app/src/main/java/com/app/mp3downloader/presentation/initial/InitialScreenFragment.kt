@@ -2,10 +2,14 @@ package com.app.mp3downloader.presentation.initial
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.view.MotionEvent
 import com.app.mp3downloader.R
 import com.app.mp3downloader.presentation.core.base.BaseFragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.app.mp3downloader.common.DOWNLOAD_SCREEN
+import com.app.mp3downloader.common.ERROR_SCREEN
 import com.app.mp3downloader.databinding.FragmentInatialScreenBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,6 +21,21 @@ R.layout.fragment_inatial_screen
     override val viewModel: InitialScreenViewModel by viewModels()
 
     override fun observeViewModel() {
+        viewModel._navigateToDestination.observe(this){destination->
+            when(destination){
+                DOWNLOAD_SCREEN ->{
+                    viewModel._navigateToDestination.value = 0
+                    val b = Bundle()
+                    b.putSerializable("youtubeMetadata",viewModel.youtubeMetadata)
+                    b.putString("videoURL",binding.youTubeURL.text.toString())
+                    b.putString("directory",binding.folderDestination.text.toString())
+                    findNavController().navigate(R.id.downloadScreen,b)
+                }
+                ERROR_SCREEN->{
+
+                }
+            }
+        }
     }
     override fun init() {
         viewModel.lifecycleOwner = this

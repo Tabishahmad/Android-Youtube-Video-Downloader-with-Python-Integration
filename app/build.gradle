@@ -106,6 +106,9 @@ dependencies {
     //Runtime Permission
     implementation 'com.karumi:dexter:6.2.3'
 
+    implementation 'com.google.code.gson:gson:2.9.0'
+
+
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

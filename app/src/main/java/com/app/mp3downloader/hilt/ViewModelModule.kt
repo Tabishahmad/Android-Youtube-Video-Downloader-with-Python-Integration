@@ -17,6 +17,6 @@ class ViewModelModule {
     @Provides
     fun provideBookUseCase(@ApplicationContext appContext: Context):UseCase{
         return UseCase(GrabVideoInfoUseCase(appContext),
-            DownloadVideoUseCase())
+            DownloadVideoUseCase(appContext))
     }
 }

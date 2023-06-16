@@ -88,7 +88,27 @@ class downloader:
                 print("error ",str(e))
                 self.fail = True
 
-
+    def get_video_info(self):
+                    ydl_opts = {
+                        'extract_flat': True,
+                        'skip_download': True,
+                    }
+                    try:
+                        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                            info = ydl.extract_info(self.url, download=False)
+                            title = info.get('title')
+                            thumbnail = info.get('thumbnail')
+                            view_count = info.get('view_count')
+                            like_count = info.get('like_count')
+                            return {
+                                'title': title,
+                                'thumbnail': thumbnail,
+                                'view_count': view_count,
+                                'like_count': like_count
+                            }
+                    except Exception as e:
+                        print("error ", str(e))
+                        return None
 
     def my_hook(self,d):
         if d['status'] == 'downloading':

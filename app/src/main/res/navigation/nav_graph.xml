@@ -9,4 +9,9 @@
         android:name="com.app.mp3downloader.presentation.initial.InitialScreenFragment"
         android:label="@string/InitialScreenFragment_label">
     </fragment>
+    <fragment
+        android:id="@+id/downloadScreen"
+        android:name="com.app.mp3downloader.presentation.download.DownloadFragment"
+        android:label="@string/DownloadScreenFragment_label">
+    </fragment>
 </navigation>

@@ -4,13 +4,14 @@ import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import android.provider.DocumentsContract
+import android.view.View
 import android.widget.EditText
+import android.widget.ProgressBar
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
 import com.app.mp3downloader.R
-import com.app.mp3downloader.common.isEmpty
-import com.app.mp3downloader.common.isFolderPathValid
-import com.app.mp3downloader.common.isValidUrl
-import com.app.mp3downloader.common.showSnackbar
+import com.app.mp3downloader.common.*
+import com.app.mp3downloader.data.model.YoutubeMetadata
 import com.app.mp3downloader.domain.model.VideoDownloadParams
 import com.app.mp3downloader.domain.usecase.UseCase
 import com.app.mp3downloader.presentation.core.base.BaseViewModel
@@ -21,6 +22,8 @@ import javax.inject.Inject
 class InitialScreenViewModel @Inject constructor(private val useCase: UseCase,private val context: Context) : BaseViewModel() {
 
     lateinit var lifecycleOwner: LifecycleOwner
+    val _navigateToDestination = MutableLiveData<Int>(0)
+    lateinit var youtubeMetadata : YoutubeMetadata
 
     fun getDirectoryPathFromUri(uri: Uri): String? {
         val documentId = DocumentsContract.getTreeDocumentId(uri)
@@ -34,14 +37,42 @@ class InitialScreenViewModel @Inject constructor(private val useCase: UseCase,pr
             null
         }
     }
-    fun onDownloadButtonClick(urlEditText:EditText,destinationFolderEditText:EditText){
+    fun onDownloadButtonClick(view: View,urlEditText:EditText,
+                              destinationFolderEditText:EditText,
+                              progressBar: ProgressBar){
         validateEditBoxes(urlEditText,destinationFolderEditText)
+        //make it grab screen
+        disableItems(view,urlEditText,destinationFolderEditText)
+        progressBar.visibility = View.VISIBLE
 
         //Create an object of VideoDownloadParams
         val videoDownloadParams = VideoDownloadParams(urlEditText.text.toString(),
         "m4a",destinationFolderEditText.text.toString(),"")
         //Perform click event now
-        useCase.grabVideoInfoUseCase(lifecycleOwner,videoDownloadParams)
+        useCase.grabVideoInfoUseCase(lifecycleOwner,videoDownloadParams){metadata ->
+            progressBar.visibility = View.GONE
+            enableItems(view,urlEditText,destinationFolderEditText)
+            if(metadata == null){
+                _navigateToDestination.value = ERROR_SCREEN
+            }else{
+                //move to grab screen
+                this.youtubeMetadata = metadata
+                _navigateToDestination.value = DOWNLOAD_SCREEN
+            }
+        }
+    }
+    private fun disableItems(view: View,urlEditText:EditText,
+                             destinationFolderEditText:EditText){
+        urlEditText.isEnabled = false
+        destinationFolderEditText.isEnabled = false
+        view.isEnabled = false
+    }
+    private fun enableItems(view: View,urlEditText:EditText,
+                             destinationFolderEditText:EditText){
+        view.isEnabled = true
+        urlEditText.isEnabled = true
+        destinationFolderEditText.isEnabled = true
+
     }
     private fun validateEditBoxes(urlEditText:EditText,destinationFolderEditText:EditText){
         val str = urlEditText.text.toString()
