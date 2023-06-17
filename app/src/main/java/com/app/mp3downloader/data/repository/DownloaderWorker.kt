@@ -63,7 +63,7 @@ class DownloaderWorker @Inject constructor(
         var processFail = false
         while (downloader.callAttr("state").toBoolean() != false || processFail) {
             processFail = downloader.callAttr("isFail").toBoolean()
-//            val progress = downloader.callAttr("getProgress").toInt()
+//            val progress = downloader.get("progress")?.toInt()
 //            notifyProgress(progress)
             println("State : $processFail")
             if (processFail) {
@@ -99,7 +99,7 @@ class DownloaderWorker @Inject constructor(
             while (downloader.callAttr("state").toBoolean() != false) {
                 println("Value 2 " + downloader.get("status").toString())
                 processFail = downloader.callAttr("isFail").toBoolean()
-//                val progress = downloader.callAttr("getProgress").toInt()
+//                val progress = downloader.get("progress")?.toInt()
 //                notifyProgress(progress)
                 if (processFail) {
                     notifyFail()
@@ -131,7 +131,7 @@ class DownloaderWorker @Inject constructor(
         notifyFail()
         return Result.failure()
     }
-    private fun notifyProgress(progress: Int){
+    private fun notifyProgress(progress: Int?){
         println("notifyProgress " + progress)
     }
     override fun onStopped() {

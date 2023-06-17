@@ -16,6 +16,7 @@
     <string name="InitialScreenFragment_label">InitialScreenFragment</string>
     <string name="DownloadScreenFragment_label">DownloadScreenFragment</string>
     <string name="emptyURL">URL cannot be empty</string>
+    <string name="no_internet">Internet is not connected</string>
     <string name="file_downloaded_successfully">MP3 file downloaded successfully</string>
     <string name="InvalidURL">Invalid URL</string>
     <string name="Invalid_dis_et">Invalid destination folder path</string>

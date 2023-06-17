@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.DocumentsContract
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import androidx.lifecycle.LifecycleOwner
@@ -15,6 +16,7 @@ import com.app.mp3downloader.data.model.YoutubeMetadata
 import com.app.mp3downloader.domain.model.VideoDownloadParams
 import com.app.mp3downloader.domain.usecase.UseCase
 import com.app.mp3downloader.presentation.core.base.BaseViewModel
+import com.app.mp3downloader.utli.NetworkUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -42,6 +44,7 @@ class InitialScreenViewModel @Inject constructor(private val useCase: UseCase,pr
                               progressBar: ProgressBar){
         validateEditBoxes(urlEditText,destinationFolderEditText)
         //make it grab screen
+        (view as Button).setText("Grabbing Info...")
         disableItems(view,urlEditText,destinationFolderEditText)
         progressBar.visibility = View.VISIBLE
 
@@ -51,6 +54,7 @@ class InitialScreenViewModel @Inject constructor(private val useCase: UseCase,pr
         //Perform click event now
         useCase.grabVideoInfoUseCase(lifecycleOwner,videoDownloadParams){metadata ->
             progressBar.visibility = View.GONE
+            (view as Button).setText("Download")
             enableItems(view,urlEditText,destinationFolderEditText)
             if(metadata == null){
                 _navigateToDestination.value = ERROR_SCREEN
@@ -75,8 +79,9 @@ class InitialScreenViewModel @Inject constructor(private val useCase: UseCase,pr
 
     }
     private fun validateEditBoxes(urlEditText:EditText,destinationFolderEditText:EditText){
-        val str = urlEditText.text.toString()
-        println(str)
+        if(!NetworkUtils.isInternetConnected(context)){
+            context.getString(R.string.no_internet).showSnackbar(urlEditText)
+        }
         if(urlEditText.isEmpty()){
             context.getString(R.string.emptyURL).showSnackbar(urlEditText)
             return

@@ -15,6 +15,7 @@ class downloader:
         self.fail = False
         self.stop=False
         self.status = 'Stopped'
+        self.progress = 0
 
     def getTime(self):
         time_stamp = time.localtime()
@@ -109,7 +110,13 @@ class downloader:
                     except Exception as e:
                         print("error ", str(e))
                         return None
-
+#     def my_hook(self, d):
+#             if d['status'] == 'downloading':
+#                 self.progress = int(d['_percent_str'].strip('%'))
+#                 self.status = d['_percent_str']
+#                 if self.stop:
+#                     self.status = 'Stopped'
+#                     raise ValueError('Stopping process')
     def my_hook(self,d):
         if d['status'] == 'downloading':
             self.status=d['_percent_str']
