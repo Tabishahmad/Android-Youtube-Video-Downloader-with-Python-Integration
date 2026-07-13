@@ -15,7 +15,7 @@ Welcome to the YouTube Video Downloader for Android repository! This open-source
 ## Getting Started
 
 1. Follow the steps outlined in the accompanying Medium blog post [here](https://medium.com/@tabish.dev.work/how-to-use-python-script-in-android-d064081ebc8c) to set up your development environment and get started with the project.
-2. Clone the repository to your local machine using `git clone https://github.com/Tabishahmad/Mp3Downloader.git`.
+2. Clone the repository to your local machine using `git clone https://github.com/Tabishahmad/Android-Youtube-Video-Downloader-with-Python-Integration.git`.
 3. Dive into the project codebase and explore the integration of Python scripts in Android through the provided code snippets and examples.
 
 ## License
