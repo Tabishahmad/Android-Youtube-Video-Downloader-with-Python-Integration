@@ -1,28 +1,33 @@
-# YouTube Video Downloader for Android: Leveraging Python Scripts
+# Android YouTube Downloader — Python Integration
 
-## Overview
-
-Welcome to the YouTube Video Downloader for Android repository! This open-source project aims to provide developers with a comprehensive guide on integrating Python scripts into Android apps for downloading YouTube videos. The accompanying Medium blog post, titled "Leveraging Python Scripts in Android: A Guide to YouTube Video Downloads," offers detailed insights, step-by-step instructions, and best practices for building a robust and efficient video downloader.
+An Android app that downloads YouTube videos by embedding **Python scripts directly in the app** via Chaquopy, instead of relying on a server-side backend — fetching metadata and running the download as a background `WorkManager` job.
 
 ## Features
+- Fetch video metadata (title, formats) by calling a Python script from Kotlin via Chaquopy
+- Background download via `WorkManager`, with a stop/cancel action
+- Progress and download state surfaced through a Clean Architecture use-case layer
 
-- Python Integration: Learn how to seamlessly incorporate Python scripts into Android apps for enhanced functionality.
-- YouTube API Integration: Explore the process of authenticating with the YouTube API to enable video downloads.
-- Download Handling: Gain insights into managing download requests efficiently and handling various scenarios.
-- Performance Optimization: Discover strategies for optimizing performance and ensuring a smooth user experience.
-- Troubleshooting Tips: Find solutions to common challenges and troubleshooting techniques for smooth development.
+## Architecture
+Clean Architecture + MVVM:
+```
+presentation/   → Fragments, ViewModels
+domain/         → UseCases (GrabVideoInfoUseCase, DownloadVideoUseCase)
+data/           → Repository impls, WorkManager workers, Python bridge
+```
+- **DI:** Hilt
+- **Python bridge:** Chaquopy (`app/src/main/python`)
 
-## Getting Started
+## Tech stack
+`Kotlin` `Chaquopy (Python on Android)` `WorkManager` `Hilt` `Clean Architecture`
 
-1. Follow the steps outlined in the accompanying Medium blog post [here](https://medium.com/@tabish.dev.work/how-to-use-python-script-in-android-d064081ebc8c) to set up your development environment and get started with the project.
-2. Clone the repository to your local machine using `git clone https://github.com/Tabishahmad/Android-Youtube-Video-Downloader-with-Python-Integration.git`.
-3. Dive into the project codebase and explore the integration of Python scripts in Android through the provided code snippets and examples.
+## Running it
+```bash
+git clone https://github.com/Tabishahmad/Android-Youtube-Video-Downloader-with-Python-Integration.git
+```
+Open in Android Studio and run.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute the code for your purposes.
+## Write-up
+Full walkthrough: [Leveraging Python Scripts in Android: A Guide to YouTube Video Downloads](https://medium.com/@tabish.dev.work/how-to-use-python-script-in-android-d064081ebc8c)
 
 ## Disclaimer
-
-Please note that this project is intended for educational purposes and adheres to YouTube's terms of service. Respect copyright laws and use this project responsibly.
-
+Built for educational purposes. Respect YouTube's terms of service and copyright law when using this.
